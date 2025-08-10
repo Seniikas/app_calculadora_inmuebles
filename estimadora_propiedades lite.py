@@ -44,14 +44,22 @@ def cargar_barrios():
         st.error("❌ No se encontró el archivo de barrios. Ejecuta primero 'generar_diccionario_barrios.py'")
         return {}
 
-# Cargar opciones de tipos de propiedad
+# Cargar opciones de tipos de propiedad (ARCHIVO LIGERO)
 @st.cache_resource
 def cargar_tipos_propiedad():
     try:
-        df = pd.read_csv("datasets_sin_otro/df_sin_otro_1M.csv")
-        return sorted(df['property_type'].unique())
+        # Opción 1: JSON (más ligero)
+        import json
+        with open('tipos_propiedad.json', 'r', encoding='utf-8') as f:
+            tipos_propiedad = json.load(f)
+        return tipos_propiedad
+        
+        # Opción 2: CSV simple
+        # df_tipos = pd.read_csv("tipos_propiedad.csv")
+        # return sorted(df_tipos['property_type'].unique())
+        
     except FileNotFoundError:
-        st.error("❌ No se encontró el dataset. Asegúrate de que el archivo CSV esté disponible.")
+        st.error("❌ No se encontró el archivo de tipos de propiedad. Ejecuta 'generar_tipos_propiedad.py'")
         return []
 
 # Cargar datos
@@ -238,4 +246,5 @@ with st.expander("ℹ️ Información sobre el modelo"):
 st.markdown("---")
 
 st.markdown("*Desarrollado con Streamlit y Machine Learning*") 
+
 
