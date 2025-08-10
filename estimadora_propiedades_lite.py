@@ -48,20 +48,24 @@ def cargar_barrios():
 @st.cache_resource
 def cargar_tipos_propiedad():
     try:
-        # Opción 1: JSON (más ligero)
         import json
-        with open('tipos_propiedad.json', 'r', encoding='utf-8') as f:
+        import os
+        
+        # Obtener directorio del script actual
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(script_dir, 'tipos_propiedad.json')
+        
+        with open(json_path, 'r', encoding='utf-8') as f:
             tipos_propiedad = json.load(f)
         return tipos_propiedad
         
-        # Opción 2: CSV simple
-        # df_tipos = pd.read_csv("tipos_propiedad.csv")
-        # return sorted(df_tipos['property_type'].unique())
-        
     except FileNotFoundError:
-        st.error("❌ No se encontró el archivo de tipos de propiedad. Ejecuta 'generar_tipos_propiedad.py'")
+        st.error(f"❌ No se encontró: tipos_propiedad.json")
+        st.error(f"📁 Buscando en: {script_dir}")
         return []
-
+    except Exception as e:
+        st.error(f"❌ Error al cargar tipos: {str(e)}")
+        return []
 # Cargar datos
 modelo = cargar_modelo()
 barrios_por_zona = cargar_barrios()
@@ -246,5 +250,6 @@ with st.expander("ℹ️ Información sobre el modelo"):
 st.markdown("---")
 
 st.markdown("*Desarrollado con Streamlit y Machine Learning*") 
+
 
 
