@@ -27,7 +27,8 @@ st.markdown("---")
 @st.cache_resource
 def cargar_modelo():
     try:
-        modelo = joblib.load('modelo_comprimido2.pkl')
+        with open('random_forest_model3.pkl', 'rb') as f:
+            modelo = pickle.load(f)
         return modelo
     except FileNotFoundError:
         st.error("❌ No se encontró el archivo del modelo. Asegúrate de que 'modelo_comprimido2.pkl' esté en la carpeta")
@@ -236,4 +237,5 @@ with st.expander("ℹ️ Información sobre el modelo"):
 
 # Footer
 st.markdown("---")
+
 st.markdown("*Desarrollado con Streamlit y Machine Learning*") 
