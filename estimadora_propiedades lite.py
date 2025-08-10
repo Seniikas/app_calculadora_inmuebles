@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import pickle
 import numpy as np
-import joblib
 
 # Configuración de la página
 st.set_page_config(
@@ -239,3 +238,4 @@ with st.expander("ℹ️ Información sobre el modelo"):
 st.markdown("---")
 
 st.markdown("*Desarrollado con Streamlit y Machine Learning*") 
+
